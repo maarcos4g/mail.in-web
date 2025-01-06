@@ -5,6 +5,7 @@ import { z } from "zod";
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RegisterUser } from "@/api/register-user";
+import { RequestAuthCode } from "@/api/request-authentication-code";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
@@ -49,9 +50,14 @@ export function SignUp() {
     mutationFn: RegisterUser
   })
 
+  const { mutateAsync: requestAuthCode } = useMutation({
+    mutationFn: RequestAuthCode
+  })
+
   async function handleRegisterUser({ email, planId, name }: SignUpSchema) {
     try {
       await registerUser({ email, name, planId })
+      await requestAuthCode({ email })
 
       toast.success('Cadastro realizado com sucesso!')
       navigate('/auth/code')
@@ -136,9 +142,9 @@ export function SignUp() {
         variant="default"
         type={step === 3 ? 'submit' : 'button'}
         disabled={
-          isSubmitting || 
-          (step === 1 && !watch('planId')) || 
-          (step === 2 && !watch('name')) || 
+          isSubmitting ||
+          (step === 1 && !watch('planId')) ||
+          (step === 2 && !watch('name')) ||
           (step === 3 && !watch('email'))}
         onClick={() => {
           if (step < 3) {
