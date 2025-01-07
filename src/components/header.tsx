@@ -1,15 +1,11 @@
 import logo from '@/assets/logo.svg'
-import { Bell, UserRoundPlus } from 'lucide-react'
+import { Bell } from 'lucide-react'
 
 import { TeamSwitcher } from './team-switcher'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { getInitials } from '@/lib/get-name-initials'
-import { getAuth } from '@/lib/auth'
 import { InvitationsDropdown } from './invitations-dropdown'
+import { ProfileButton } from './profile-button'
 
 export function Header() {
-
-  const { user } = getAuth()
 
   return (
     <div className="flex items-center justify-between pt-6">
@@ -26,20 +22,7 @@ export function Header() {
           <Bell className='text-zinc-600 size-5' />
         </div>
 
-        <Avatar className='size-8'>
-          {user && user?.avatarUrl != null ? (
-            <AvatarImage
-              src={user.avatarUrl}
-              alt=""
-            />
-          ) : (
-            <>
-              <AvatarFallback>
-                {user?.fullName && getInitials(user.fullName)}
-              </AvatarFallback>
-            </>
-          )}
-        </Avatar>
+        <ProfileButton />
       </div>
     </div>
   )

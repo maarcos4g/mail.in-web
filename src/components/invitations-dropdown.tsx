@@ -3,7 +3,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -46,7 +45,7 @@ export function InvitationsDropdown() {
 
           {invites?.map((invite) => {
             return (
-              <div className='flex flex-col gap-3'>
+              <div className='flex flex-col gap-3' key={invite.id}>
                 <div className='flex items-center gap-2'>
                   <div className='rounded-full p-2 border border-zinc-200'>
                     <UserRoundPlus className='size-4 text-zinc-200' />
