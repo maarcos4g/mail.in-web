@@ -7,6 +7,7 @@ import { SignIn } from "@/pages/auth/sign-in";
 
 import { AppLayout } from "@/pages/_layouts/app";
 import { Home } from "@/pages/app";
+import { HomeTeam } from "./pages/app/home";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
         path: '/',
         index: true,
         element: <Home />
+      },
+      {
+        path: '/team/:slug',
+        element: <HomeTeam />
       }
     ],
   },

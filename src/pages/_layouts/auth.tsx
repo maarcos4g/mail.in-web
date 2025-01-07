@@ -6,7 +6,7 @@ export function AuthLayout() {
   const { pathname } = useLocation()
 
   return (
-    <div className='flex flex-col min-h-screen pt-6'>
+    <div className='flex flex-col min-h-screen pt-6 px-10'>
       <div className='flex items-center justify-between'>
         <img src={logo} alt="Logo da plataforma" />
         {pathname !== '/auth/sign-in' ? (

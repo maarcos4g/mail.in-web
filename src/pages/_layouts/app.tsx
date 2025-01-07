@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import cookies from 'js-cookie'
 import { Outlet, useNavigate } from 'react-router-dom'
+import { Header } from '@/components/header'
 
 export function AppLayout() {
   const navigate = useNavigate()
@@ -13,9 +14,12 @@ export function AppLayout() {
   }, [token, navigate])
 
   return (
-    <div>
-      AppLayout
-      <Outlet />
+    <div className='flex flex-col min-h-screen px-10'>
+      <Header />
+
+      <div>
+        <Outlet />
       </div>
+    </div>
   )
 }
