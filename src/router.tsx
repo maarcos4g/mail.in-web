@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { AuthLayout } from "@/pages/_layouts/auth";
 import { SignUp } from "@/pages/auth/sign-up";
 import { ValidateCode } from "@/pages/auth/validate-code";
+import { SignIn } from "@/pages/auth/sign-in";
 
 import { AppLayout } from "@/pages/_layouts/app";
 import { Home } from "@/pages/app";
@@ -26,7 +27,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'sign-in',
-        element: <h1>SignIn</h1>
+        element: <SignIn />
       },
       {
         path: 'sign-up',
