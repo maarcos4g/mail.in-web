@@ -9,10 +9,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
+
 import { GetProfile } from '@/api/get-profile'
 import { useQuery } from '@tanstack/react-query'
 import { Checkbox } from './ui/checkbox'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Skeleton } from './ui/skeleton'
 
 export function TeamSwitcher() {
   const { slug } = useParams()
@@ -40,32 +42,37 @@ export function TeamSwitcher() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        className="flex w-[220px] items-center justify-between gap-2 rounded-md py-2 px-4 text-sm font-medium border-2 border-zinc-600 bg-zinc-900 outline-none focus-visible:ring-2 focus-visible:ring-primary"
-      >
+      {isLoadingTeams ? (
+        <>
+          <Skeleton className='w-[220px] h-[38px]' />
+        </>
+      ) : (
+        <DropdownMenuTrigger
+          className="flex w-[220px] items-center justify-between gap-2 rounded-md py-2 px-4 text-sm font-medium border-2 border-zinc-600 bg-zinc-900 outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        >
 
-        {isLoadingTeams && (<h1>Carregando...</h1>)}
-
-        {currentTeam ? (
-          <>
-            <span className='text-sm text-zinc-200 font-medium'>
-              {currentTeam.name}
-            </span>
-            {/* <div
+          {currentTeam ? (
+            <>
+              <span className='text-sm text-zinc-200 font-medium'>
+                {currentTeam.name}
+              </span>
+              {/* <div
               className='bg-zinc-900 border border-green-500 text-green-500 text-[10px] font-semibold py-1 px-2 rounded-2xl'
             >
               {data?.plan.name.toUpperCase()}
             </div> */}
-            <ChevronsUpDown className="ml-auto size-4 shrink-0 text-muted-foreground" />
-          </>
-        ) : (
-          <>
-            <span className="text-muted-foreground">Selecione o time</span>
-            <ChevronsUpDown className="ml-auto size-4 shrink-0 text-muted-foreground" />
-          </>
-        )
-        }
-      </DropdownMenuTrigger>
+              <ChevronsUpDown className="ml-auto size-4 shrink-0 text-muted-foreground" />
+            </>
+          ) : (
+            <>
+              <span className="text-muted-foreground">Selecione o time</span>
+              <ChevronsUpDown className="ml-auto size-4 shrink-0 text-muted-foreground" />
+            </>
+          )
+          }
+        </DropdownMenuTrigger>
+      )}
+
       <DropdownMenuContent
         align="end"
         alignOffset={currentTeam ? -75 : -16}
@@ -133,8 +140,8 @@ export function TeamSwitcher() {
         </DropdownMenuGroup>
         <DropdownMenuItem asChild>
           <Link
-          to={'/'}
-          className='max-w-[260px] focus:bg-zinc-300 focus:text-zinc-900 focus:border-zinc-300 cursor-pointer bg-zinc-950 border-2 border-zinc-600 text-zinc-200 outline-none'
+            to={'/'}
+            className='max-w-[260px] focus:bg-zinc-300 focus:text-zinc-900 focus:border-zinc-300 cursor-pointer bg-zinc-950 border-2 border-zinc-600 text-zinc-200 outline-none'
           >
             <PlusCircle className="mr-2 size-4" />
             Criar novo time

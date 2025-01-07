@@ -5,6 +5,7 @@ import { TeamSwitcher } from './team-switcher'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { getInitials } from '@/lib/get-name-initials'
 import { getAuth } from '@/lib/auth'
+import { InvitationsDropdown } from './invitations-dropdown'
 
 export function Header() {
 
@@ -19,14 +20,7 @@ export function Header() {
       </div>
 
       <div className='flex items-center gap-6'>
-        <div className='relative'>
-          <UserRoundPlus className='text-zinc-600 size-6' />
-          <div
-            className='absolute left-3 bottom-3 bg-red-500 rounded-full text-xs flex items-center justify-center w-4 h-4'
-          >
-            2
-          </div>
-        </div>
+        <InvitationsDropdown />
 
         <div className='border border-zinc-600 items-center justify-center relative flex h-8 w-8 shrink-0 overflow-hidden rounded-full'>
           <Bell className='text-zinc-600 size-5' />
