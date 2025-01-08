@@ -13,11 +13,17 @@ import { Skeleton } from './ui/skeleton'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { LogOut, UserRoundCog, UsersRound } from 'lucide-react'
 
+import cookies from 'js-cookie'
+
 import { Link } from 'react-router-dom'
 
 export function ProfileButton() {
 
   const { user, isLoading } = getAuth()
+
+  function handleSignOut() {
+    cookies.remove('@token')
+  }
 
   return (
     <DropdownMenu>
@@ -97,8 +103,9 @@ export function ProfileButton() {
           </Link>
 
           <Link
-            to={'/'}
+            to={'/auth/sign-in'}
             className='w-full py-4 flex items-center justify-between text-sm font-semibold text-zinc-200'
+            onClick={handleSignOut}
           >
             Sair
             <LogOut className='size-4' />
