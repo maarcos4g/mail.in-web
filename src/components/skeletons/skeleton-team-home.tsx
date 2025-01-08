@@ -1,21 +1,9 @@
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../ui/skeleton";
 
 export function SkeletonHome() {
   return (
     <div className="flex flex-col min-h-full min-w-full">
       <div className="space-y-6 p-6">
-        <div className="flex items-center justify-between">
-          {/* Título */}
-          <div className="flex items-center gap-4">
-            <Skeleton className="h-[25px] w-[173px]" />
-
-            {/* Campo de busca */}
-            <Skeleton className="h-[28px] w-[240px]" />
-          </div>
-
-          {/* Botão */}
-          <Skeleton className="h-[38px] w-[179px]" />
-        </div>
 
         <div className="grid grid-cols-[336px_minmax(900px,_1fr)_100px] gap-[216px]">
           {/* Atividade do time */}

@@ -1,6 +1,5 @@
-import { SkeletonHome } from "@/components/skeleton-home"
+import { SkeletonHome } from "@/components/skeletons/skeleton-home"
 import { getAuth } from "@/lib/auth"
-import { CircleAlert, FileWarning } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import emptyState from '@/assets/empty-state.svg'
 
@@ -25,7 +24,7 @@ export function Home() {
 
   return (
     <div
-      className="flex flex-col gap-6 min-w-[402px] min-h-full items-center"
+      className="flex flex-col gap-6 min-w-full min-h-full items-center justify-center"
     >
       <img
         src={emptyState}

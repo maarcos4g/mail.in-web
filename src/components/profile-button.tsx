@@ -30,7 +30,7 @@ export function ProfileButton() {
             {user && user?.avatarUrl != null ? (
               <AvatarImage
                 src={user.avatarUrl}
-                alt=""
+                alt={`Avatar do usuário ${user.firstName}`}
               />
             ) : (
               <>
@@ -58,7 +58,7 @@ export function ProfileButton() {
                 {user && user?.avatarUrl != null ? (
                   <AvatarImage
                     src={user.avatarUrl}
-                    alt=""
+                    alt={`Avatar do usuário ${user.firstName}`}
                   />
                 ) : (
                   <>
@@ -81,34 +81,34 @@ export function ProfileButton() {
           </DropdownMenuLabel>
 
           <Link
-          to={'/'}
-          className='w-full py-4 flex items-center justify-between text-sm font-semibold text-zinc-200'
+            to={'/'}
+            className='w-full py-4 flex items-center justify-between text-sm font-semibold text-zinc-200'
           >
             Configurações da conta
             <UserRoundCog className='size-4' />
           </Link>
-          
+
           <Link
-          to={'/'}
-          className='w-full py-4 flex items-center justify-between text-sm font-semibold text-zinc-200'
+            to={'/'}
+            className='w-full py-4 flex items-center justify-between text-sm font-semibold text-zinc-200'
           >
             Criar novo time
             <UsersRound className='size-4' />
           </Link>
-          
+
           <Link
-          to={'/'}
-          className='w-full py-4 flex items-center justify-between text-sm font-semibold text-zinc-200'
+            to={'/'}
+            className='w-full py-4 flex items-center justify-between text-sm font-semibold text-zinc-200'
           >
             Sair
             <LogOut className='size-4' />
           </Link>
 
           <DropdownMenuSeparator className='bg-zinc-600 h-0.5 w-full' />
-          
+
           <Link
-          to={'/'}
-          className='w-full py-2 flex items-center justify-center text-sm font-semibold text-zinc-900 bg-zinc-200 rounded-md mt-4'
+            to={'/'}
+            className='w-full py-2 flex items-center justify-center text-sm font-semibold text-zinc-900 bg-zinc-200 rounded-md mt-4 hover:bg-zinc-300'
           >
             Upgrade
           </Link>

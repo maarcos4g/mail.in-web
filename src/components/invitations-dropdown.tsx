@@ -1,4 +1,4 @@
-import { Check, UserRoundPlus, X } from 'lucide-react'
+import { Check, Loader2, UserRoundPlus, X } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,6 +9,7 @@ import {
 } from './ui/dropdown-menu'
 import { useQuery } from '@tanstack/react-query'
 import { GetMyInvitations } from '@/api/get-my-invitations'
+import { Skeleton } from './ui/skeleton'
 
 export function InvitationsDropdown() {
 
@@ -23,27 +24,37 @@ export function InvitationsDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='relative'>
-        <UserRoundPlus className='text-zinc-600 size-6' />
-        {invites && (
-          <div
-            className='absolute left-3 bottom-3 bg-red-500 rounded-full text-xs flex items-center justify-center w-4 h-4'
-          >
-            {invites.length}
-          </div>
+        {isLoading ? (
+          <Skeleton className='size-8 rounded-full' />
+        ) : (
+          <>
+            <UserRoundPlus className='text-zinc-600 size-6' />
+            {invites && (
+              <div
+                className='absolute left-3 bottom-3 bg-red-500 rounded-full text-xs flex items-center justify-center w-4 h-4'
+              >
+                {invites.length}
+              </div>
+            )}
+          </>
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
         alignOffset={-16}
         sideOffset={12}
-        className='bg-zinc-950 text-zinc-100 border-zinc-600 border-2 px-4 py-2 flex flex-col gap-2 outline-none focus-visible:ring-2 focus-visible:ring-primary'
+        className='bg-zinc-950 text-zinc-100 border-zinc-600 border-2 py-2 flex flex-col gap-2 outline-none focus-visible:ring-2 focus-visible:ring-primary'
       >
         <DropdownMenuGroup
           className='p-2 flex flex-col items-start text-start'
         >
           <DropdownMenuLabel className='font-bold text-base mb-3'>Solicitações</DropdownMenuLabel>
 
-          {invites?.map((invite) => {
+          {isLoading && (
+            <Loader2 className='animate-spin text-zinc-600' />
+          )}
+
+          {invites && invites.map((invite) => {
             return (
               <div className='flex flex-col gap-3' key={invite.id}>
                 <div className='flex items-center gap-2'>
