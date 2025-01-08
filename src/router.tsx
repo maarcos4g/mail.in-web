@@ -9,6 +9,7 @@ import { AppLayout } from "@/pages/_layouts/app";
 import { Home } from "@/pages/app";
 import { HomeTeam } from "./pages/app/home";
 import { EmailHome } from "./pages/app/emails";
+import { AcceptInvite } from "./pages/app/accept-invite";
 
 export const router = createBrowserRouter([
   {
@@ -48,5 +49,10 @@ export const router = createBrowserRouter([
         element: <ValidateCode />
       }
     ],
+  },
+  //Public routes
+  {
+    path: '/team/:slug/invite/:inviteId',
+    element: <AcceptInvite />
   }
 ])

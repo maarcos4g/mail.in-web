@@ -14,12 +14,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: ButtonVariants
 }
 
-export function Button({ label, variant = 'default', children, ...props }: ButtonProps) {
+export function Button({ label, variant = 'default', children, className, ...props }: ButtonProps) {
   const classes = clsx(buttonVariants[variant])
 
   return (
     <button
-      className={classes}
+      className={clsx(classes, className)}
       {...props}
     >
       {children}
