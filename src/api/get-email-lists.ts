@@ -26,7 +26,7 @@ export interface GetAllEmailListsResponse {
   }[]
 }
 
-export async function GetAllEmailLists({ teamId }: GetAllEmailListsParams) {
+export async function GetEmailLists({ teamId }: GetAllEmailListsParams) {
   const token = cookies.get('@token')
 
   const response = await api.get<GetAllEmailListsResponse>(`/email-list/${teamId}`, {

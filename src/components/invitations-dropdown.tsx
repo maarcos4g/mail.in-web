@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { useQuery } from '@tanstack/react-query'
-import { GetMyInvitations } from '@/api/get-my-invitations'
+import { GetInvitations } from '@/api/get-invitations'
 import { Skeleton } from './ui/skeleton'
 
 export function InvitationsDropdown() {
@@ -18,7 +18,7 @@ export function InvitationsDropdown() {
     isLoading,
   } = useQuery({
     queryKey: ['getInvitations'],
-    queryFn: () => GetMyInvitations()
+    queryFn: () => GetInvitations()
   })
 
   return (

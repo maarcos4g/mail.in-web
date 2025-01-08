@@ -18,7 +18,7 @@ export interface GetInvitationsResponse {
   }[]
 }
 
-export async function GetMyInvitations() {
+export async function GetInvitations() {
   const token = cookies.get('@token')
   const response = await api.get<GetInvitationsResponse>('/invites', {
     headers: {

@@ -1,4 +1,4 @@
-import { GetAllEmailLists } from "@/api/get-all-email-lists"
+import { GetEmailLists } from "@/api/get-email-lists"
 import { useQuery } from "@tanstack/react-query"
 
 import { getCurrentTeamId } from "@/lib/get-current-team-id"
@@ -21,7 +21,7 @@ export function EmailListsTab() {
     isError
   } = useQuery({
     queryKey: ['getAllPlans'],
-    queryFn: () => GetAllEmailLists({ teamId: teamId! })
+    queryFn: () => GetEmailLists({ teamId: teamId! })
   })
 
   if (isLoading) {

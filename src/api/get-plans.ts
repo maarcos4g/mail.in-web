@@ -9,7 +9,7 @@ export interface GetAllPlansResponse {
   }[]
 }
 
-export async function GetAllPlans() {
+export async function GetPlans() {
   const response = await api.get<GetAllPlansResponse>('/plans')
 
   return response.data

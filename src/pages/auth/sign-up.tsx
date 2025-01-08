@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GetAllPlans } from "@/api/get-all-plans"
+import { GetPlans } from "@/api/get-plans"
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { useForm } from 'react-hook-form'
@@ -33,7 +33,7 @@ export function SignUp() {
     isLoading: isLoadingPlans
   } = useQuery({
     queryKey: ['getAllPlans'],
-    queryFn: () => GetAllPlans()
+    queryFn: () => GetPlans()
   })
 
   const {
