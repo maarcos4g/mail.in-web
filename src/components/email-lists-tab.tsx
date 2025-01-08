@@ -11,17 +11,37 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import emptyState from '@/assets/empty-state.svg'
 
 import dayjs from 'dayjs'
+import { z } from "zod"
+import { useSearchParams } from "react-router-dom"
 
 export function EmailListsTab() {
   const { teamId } = getCurrentTeamId()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const pageIndex = z.coerce
+    .number()
+    .transform((page) => page - 1)
+    .parse(searchParams.get('page') ?? '1')
+
+
+  function handlePaginate(pageIndex: number) {
+    setSearchParams((prev) => {
+      prev.set('page', (pageIndex + 1).toString())
+
+      return prev
+    })
+  }
 
   const {
-    data: emailLists,
+    data,
     isLoading,
     isError
   } = useQuery({
-    queryKey: ['getAllPlans'],
-    queryFn: () => GetEmailLists({ teamId: teamId! })
+    queryKey: ['getEmailLists', teamId, pageIndex],
+    queryFn: () => GetEmailLists({
+      teamId: teamId!,
+      pageIndex
+    })
   })
 
   if (isLoading) {
@@ -32,12 +52,14 @@ export function EmailListsTab() {
     return <h1>Erro</h1>
   }
 
+  const total = Math.floor(data!.total / 6) || 1
+
   return (
     <div className="flex flex-col gap-4 justify-between">
-      {emailLists && emailLists.length > 0 ? (
+      {data?.emailLists && data.emailLists.length > 0 ? (
         <>
           <div className="grid grid-cols-2 gap-6">
-            {emailLists.map((emailList, i) => (
+            {data.emailLists.map((emailList, i) => (
               <div key={emailList.id} className="bg-zinc-900 border-2 border-zinc-600 rounded-2xl">
                 <div className="p-5 border-b-2 border-zinc-500">
                   <div className="flex items-start justify-between">
@@ -74,13 +96,17 @@ export function EmailListsTab() {
 
           <div className="flex gap-2 min-w-full items-center justify-end">
             <button
-              className="p-[6px] flex items-center justify-center rounded-md border-2 border-zinc-800"
+              className="p-[6px] flex items-center justify-center rounded-md border-2 border-zinc-800 disabled:bg-zinc-900 disabled:cursor-not-allowed"
+              onClick={() => handlePaginate(pageIndex - 1)}
+              disabled={pageIndex === 0}
             >
               <ChevronLeft className="size-4 text-zinc-300" />
             </button>
 
             <button
-              className="p-[6px] flex items-center justify-center rounded-md border-2 border-zinc-800"
+              className="p-[6px] flex items-center justify-center rounded-md border-2 border-zinc-800 disabled:bg-zinc-900 disabled:cursor-not-allowed"
+              onClick={() => handlePaginate(pageIndex + 1)}
+              disabled={pageIndex >= total}
             >
               <ChevronRight className="size-4 text-zinc-300" />
             </button>
