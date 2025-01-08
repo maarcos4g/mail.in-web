@@ -8,6 +8,7 @@ import { SignIn } from "@/pages/auth/sign-in";
 import { AppLayout } from "@/pages/_layouts/app";
 import { Home } from "@/pages/app";
 import { HomeTeam } from "./pages/app/home";
+import { EmailHome } from "./pages/app/emails";
 
 export const router = createBrowserRouter([
   {
@@ -22,8 +23,12 @@ export const router = createBrowserRouter([
       },
       {
         path: '/team/:slug',
-        element: <HomeTeam />
-      }
+        element: <HomeTeam />,
+      },
+      {
+        path: '/team/:slug/emails/:emailListId',
+        element: <EmailHome />
+      },
     ],
   },
   {

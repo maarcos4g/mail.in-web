@@ -6,13 +6,13 @@ import { getCurrentTeamId } from "@/lib/get-current-team-id"
 import { EmailListSkeleton } from "./skeletons/skeleton-email-lists"
 import { EmailListOptions } from "./email-list-options"
 
-import { ChevronLeft, ChevronRight, User, User2 } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { ChevronLeft, ChevronRight, User2 } from "lucide-react"
+import { Avatar, AvatarImage } from "./ui/avatar"
 import emptyState from '@/assets/empty-state.svg'
 
 import dayjs from 'dayjs'
 import { z } from "zod"
-import { useSearchParams } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 
 export function EmailListsTab() {
   const { teamId } = getCurrentTeamId()
@@ -59,8 +59,13 @@ export function EmailListsTab() {
       {data?.emailLists && data.emailLists.length > 0 ? (
         <>
           <div className="grid grid-cols-2 gap-6">
-            {data.emailLists.map((emailList, i) => (
-              <div key={emailList.id} className="bg-zinc-900 border-2 border-zinc-600 rounded-2xl">
+            {data.emailLists.map((emailList) => (
+              <Link
+              to={`/team/${encodeURIComponent(emailList.team.slug)}/emails/${emailList.id}`}
+              onClick={() => sessionStorage.setItem('@currentEmailList', emailList.name)}
+              key={emailList.id} 
+              className="bg-zinc-900 border-2 border-zinc-600 rounded-2xl cursor-pointer"
+              >
                 <div className="p-5 border-b-2 border-zinc-500">
                   <div className="flex items-start justify-between">
                     <span className="text-zinc-200 font-medium text-lg">{emailList.name}</span>
@@ -86,11 +91,11 @@ export function EmailListsTab() {
 
                   <span className="text-xs font-semibold text-zinc-500">
                     <span className="text-zinc-200">{emailList.owner.firstName}</span>
-                    {' '} cadastrou essa lista de e-mail {' '}
+                    {' '} criou essa lista de e-mail {' '}
                     <span className="underline">{dayjs(emailList.createdAt).fromNow()}</span>
                   </span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 

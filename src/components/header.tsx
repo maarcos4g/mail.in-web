@@ -5,8 +5,18 @@ import { TeamSwitcher } from './team-switcher'
 import { InvitationsDropdown } from './invitations-dropdown'
 import { ProfileButton } from './profile-button'
 import { toast } from 'sonner'
+import { useLocation, useParams } from 'react-router-dom'
+import { EmailListSwitcher } from './email-list-switcher'
 
 export function Header() {
+  const { pathname } = useLocation()
+  const { emailListId } = useParams()
+
+  let isEmailPage: boolean = false
+
+  if (emailListId) {
+    isEmailPage = pathname.includes(`/emails/${emailListId}`)
+  }
 
   function handleNotifcationClick() {
     toast.info(`
@@ -19,6 +29,13 @@ export function Header() {
         <img src={logo} alt="Logo mail.in" />
         <div className='h-6 w-[1px] bg-zinc-500' />
         <TeamSwitcher />
+
+        {isEmailPage && (
+          <>
+            <div className='h-6 w-[1.5px] bg-zinc-500 rotate-[25deg]' />
+            <EmailListSwitcher />
+          </>
+        )}
       </div>
 
       <div className='flex items-center gap-6'>
