@@ -1,4 +1,4 @@
-import { GetAllPlansResponse } from "@/api/get-all-plans"
+import { GetAllPlansResponse } from "@/api/get-plans"
 import { Checkbox } from "./ui/checkbox"
 
 interface PlanWidgetProps {
