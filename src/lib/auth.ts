@@ -1,6 +1,8 @@
 import { GetProfile } from "@/api/get-profile";
 import { useQuery } from "@tanstack/react-query";
 
+import cookies from 'js-cookie'
+
 export function getAuth() {
   const {
     data: user,
@@ -12,4 +14,16 @@ export function getAuth() {
   })
 
   return { user, isLoading }
+}
+
+export function signToken(token: string) {
+  cookies.set('@token', token, {
+    expires: 60 * 60 * 24 * 7, //7 days
+    path: '/'
+  })
+}
+
+export function getToken() {
+  const token = cookies.get('@token')
+  return { token }
 }

@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import cookies from 'js-cookie'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Header } from '@/components/header'
+import { getToken } from '@/lib/auth'
 
 export function AppLayout() {
   const navigate = useNavigate()
-  const token = cookies.get('@token')
+  const { token } = getToken()
 
   useEffect(() => {
     if (!token) {

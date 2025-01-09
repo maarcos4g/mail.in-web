@@ -1,5 +1,5 @@
+import { getToken } from '@/lib/auth'
 import { api } from '.'
-import cookies from 'js-cookie'
 
 export interface GetProfileResponse {
   user: {
@@ -22,7 +22,7 @@ export interface GetProfileResponse {
 }
 
 export async function GetProfile() {
-  const token = cookies.get('@token')
+  const { token } = getToken()
   const response = await api.get<GetProfileResponse>('/profile', {
     headers: {
       Authorization: `Bearer ${token}`

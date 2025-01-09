@@ -1,5 +1,5 @@
+import { getToken } from "@/lib/auth"
 import { api } from "."
-import cookies from 'js-cookie'
 
 export interface AcceptInviteRequest {
   inviteId: string
@@ -8,7 +8,7 @@ export interface AcceptInviteRequest {
 export async function AcceptInvite({
   inviteId
 }: AcceptInviteRequest) {
-  const token = cookies.get('@token')
+  const { token } = getToken()
   await api.post('/accept-invite', { inviteId }, {
     headers: {
       Authorization: `Bearer ${token}`

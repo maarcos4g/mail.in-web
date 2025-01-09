@@ -6,7 +6,7 @@ export interface GetTeamForSlugParams {
 
 export interface GetTeamForSlugResponse {
   team: {
-		id: "53183dca-dbfa-48e6-8a86-65e9963e22a3",
+		id: string,
 		slug: string
 		name: string
 		ownerId: string

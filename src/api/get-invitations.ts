@@ -1,5 +1,5 @@
+import { getToken } from '@/lib/auth'
 import { api } from '.'
-import cookies from 'js-cookie'
 
 export interface GetInvitationsResponse {
   invites: {
@@ -19,7 +19,7 @@ export interface GetInvitationsResponse {
 }
 
 export async function GetInvitations() {
-  const token = cookies.get('@token')
+  const { token } = getToken()
   const response = await api.get<GetInvitationsResponse>('/invites', {
     headers: {
       Authorization: `Bearer ${token}`

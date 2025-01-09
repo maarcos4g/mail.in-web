@@ -1,5 +1,5 @@
+import { signToken } from "@/lib/auth"
 import { api } from "."
-import cookies from 'js-cookie'
 
 export interface RegisterUserRequest {
   planId: string
@@ -18,9 +18,6 @@ export async function RegisterUser({
 }: RegisterUserRequest) {
   await api.post<RegisterUserResponse>('/user', { email, name, planId })
   .then(response => {
-    cookies.set('@token', response.data.token, {
-      expires: 60 * 60 * 24 * 7, //7 days
-      path: '/'
-    })
+    signToken(response.data.token)
   })
 }

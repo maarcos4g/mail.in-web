@@ -1,5 +1,5 @@
+import { getToken } from "@/lib/auth"
 import { api } from "."
-import cookies from "js-cookie"
 
 export interface CreateTeamRequest {
   name: string
@@ -12,7 +12,7 @@ export interface CreateTeamResponse {
 export async function CreateTeam({
   name
 }: CreateTeamRequest) {
-  const token = cookies.get('@token')
+  const { token } = getToken()
 
   await api.post('/team', { name }, {
     headers: {
