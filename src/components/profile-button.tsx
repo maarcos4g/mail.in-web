@@ -16,6 +16,7 @@ import { LogOut, UserRoundCog, UsersRound } from 'lucide-react'
 import cookies from 'js-cookie'
 
 import { Link } from 'react-router-dom'
+import { CreateTeamDialog } from './create-team-dialog'
 
 export function ProfileButton() {
 
@@ -94,13 +95,7 @@ export function ProfileButton() {
             <UserRoundCog className='size-4' />
           </Link>
 
-          <Link
-            to={'/'}
-            className='w-full py-4 flex items-center justify-between text-sm font-semibold text-zinc-200'
-          >
-            Criar novo time
-            <UsersRound className='size-4' />
-          </Link>
+         <CreateTeamDialog />
 
           <Link
             to={'/auth/sign-in'}
