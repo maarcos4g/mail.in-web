@@ -7,6 +7,7 @@ export function getAuth() {
     isLoading: isLoading
   } = useQuery({
     queryKey: ['getProfile'],
+    staleTime: 15,
     queryFn: () => GetProfile()
   })
 

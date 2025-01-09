@@ -18,7 +18,8 @@ export function InvitationsDropdown() {
     isLoading,
   } = useQuery({
     queryKey: ['getInvitations'],
-    queryFn: () => GetInvitations()
+    queryFn: () => GetInvitations(),
+    staleTime: 15,
   })
 
   return (
