@@ -7,6 +7,7 @@ import {
 } from "./ui/dropdown-menu";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AddTeamMemberSheet } from "./add-team-member-sheet";
 
 export function AddNewAction() {
   const [open, setOpen] = useState(false)
@@ -45,13 +46,7 @@ export function AddNewAction() {
             E-mail
           </Link>
           
-          <Link
-            to={'/'}
-            className='w-full py-4 flex gap-2 items-center text-sm font-semibold text-zinc-200'
-          >
-            <UserRoundPlus className='size-4' />
-            Membro no time
-          </Link>
+          <AddTeamMemberSheet />
 
         </DropdownMenuGroup>
       </DropdownMenuContent>

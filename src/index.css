@@ -64,3 +64,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+.custom-scroll-hide {
+  overflow-y: auto; /* Certifique-se de permitir o scroll */
+  -ms-overflow-style: none; /* IE e Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.custom-scroll-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari e Opera */
+}
