@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AddTeamMemberSheet } from "./add-team-member-sheet";
+import { AddEmailListSheet } from "./add-email-list-sheet";
 
 export function AddNewAction() {
   const [open, setOpen] = useState(false)
@@ -30,14 +31,8 @@ export function AddNewAction() {
       >
         <DropdownMenuGroup
         >
-          <Link
-            to={'/'}
-            className='w-full py-4 flex gap-2 items-center text-sm font-semibold text-zinc-200 border-b-2 border-zinc-600'
-          >
-            <AtSign className='size-4' />
-            Lista de e-mail
-          </Link>
-          
+          <AddEmailListSheet />
+
           <Link
             to={'/'}
             className='w-full py-4 flex gap-2 items-center text-sm font-semibold text-zinc-200 border-b-2 border-zinc-600'
@@ -45,7 +40,7 @@ export function AddNewAction() {
             <MailPlus className='size-4' />
             E-mail
           </Link>
-          
+
           <AddTeamMemberSheet />
 
         </DropdownMenuGroup>
