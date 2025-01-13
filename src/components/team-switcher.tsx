@@ -112,41 +112,34 @@ export function TeamSwitcher() {
             )}
 
           </DropdownMenuLabel>
-          {teams.length > 0 &&
-            teams.map((team) => {
-              return (
-                <div
-                  key={team.id}
-                  className='w-[260px] border border-zinc-600 rounded-md flex items-center justify-between py-2 px-4'
-                >
-                  <div className='flex gap-3'>
-                    <UsersRound className='text-zinc-500 size-6' />
-                    <span className='text-zinc-200 text-sm'>{team.name}</span>
-                  </div>
+          <div className='space-y-2'>
+            {teams.length > 0 &&
+              teams.map((team) => {
+                return (
+                  <div
+                    key={team.id}
+                    className='w-[260px] border border-zinc-600 rounded-md flex items-center justify-between py-2 px-4'
+                  >
+                    <div className='flex gap-3'>
+                      <UsersRound className='text-zinc-500 size-6' />
+                      <span className='text-zinc-200 text-sm'>{team.name}</span>
+                    </div>
 
-                  <Checkbox
-                    className='rounded-full'
-                    onCheckedChange={(checked) => {
-                      if (checked) {
-                        sessionStorage.setItem('@currentTeamId', team.id)
-                        navigate(`/team/${encodeURIComponent(team.slug)}`)
-                      }
-                    }}
-                  />
-                </div>
-              )
-            })
-          }
+                    <Checkbox
+                      className='rounded-full'
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          sessionStorage.setItem('@currentTeamId', team.id)
+                          navigate(`/team/${encodeURIComponent(team.slug)}`)
+                        }
+                      }}
+                    />
+                  </div>
+                )
+              })
+            }
+          </div>
         </DropdownMenuGroup>
-        <DropdownMenuItem asChild>
-          <Link
-            to={'/'}
-            className='max-w-[260px] focus:bg-zinc-300 focus:text-zinc-900 focus:border-zinc-300 cursor-pointer bg-zinc-950 border-2 border-zinc-600 text-zinc-200 outline-none'
-          >
-            <PlusCircle className="mr-2 size-4" />
-            Criar novo time
-          </Link>
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu >
   )

@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { Check, Loader2, UserRoundPlus, X } from 'lucide-react'
 import {
   DropdownMenu,
@@ -7,13 +9,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { GetInvitations } from '@/api/get-invitations'
 import { Skeleton } from './ui/skeleton'
 import { ConfirmRevokeDialog } from './invites/confirm-revoke'
+
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { GetInvitations } from '@/api/get-invitations'
 import { AcceptInvite } from "@/api/accept-invite";
-import { useState } from 'react'
 import { toast } from 'sonner'
+import emptyState from '@/assets/empty-state.svg'
 
 export function InvitationsDropdown() {
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
@@ -58,7 +61,7 @@ export function InvitationsDropdown() {
         ) : (
           <>
             <UserRoundPlus className='text-zinc-600 size-6' />
-            {invites && (
+            {invites && invites.length > 0 && (
               <div
                 className='absolute left-3 bottom-3 bg-red-500 rounded-full text-xs flex items-center justify-center w-4 h-4'
               >
@@ -126,6 +129,22 @@ export function InvitationsDropdown() {
               </div>
             )
           })}
+
+          {invites?.length === 0 && (
+            <div className='flex flex-col items-center'>
+              <img
+                src={emptyState}
+                alt=""
+                className="size-20"
+              />
+
+              <h1
+                className="text-center text-zinc-600 text-sm"
+              >
+                Você não tem convites pendentes.
+              </h1>
+            </div>
+          )}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

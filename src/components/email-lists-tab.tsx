@@ -52,7 +52,7 @@ export function EmailListsTab() {
     return <h1>Erro</h1>
   }
 
-  const total = Math.floor(data!.total / 6) || 1
+  const total = Math.ceil(data!.total / 6)
 
   return (
     <div className="flex flex-col gap-4 justify-between">
@@ -111,7 +111,7 @@ export function EmailListsTab() {
             <button
               className="p-[6px] flex items-center justify-center rounded-md border-2 border-zinc-800 disabled:bg-zinc-900 disabled:cursor-not-allowed"
               onClick={() => handlePaginate(pageIndex + 1)}
-              disabled={pageIndex >= total}
+              disabled={pageIndex + 1 >= total}
             >
               <ChevronRight className="size-4 text-zinc-300" />
             </button>
