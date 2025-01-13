@@ -75,7 +75,7 @@ export function AddEmailListSheet() {
         error.response?.status === 401
           ? error.response.data.message
           : error.response?.status === 500
-            ? 'Ocorreu um erro no servidor durante o envio do convite.'
+            ? 'Ocorreu um erro no servidor enquanto criava a lista.'
             : error.response.data.message || 'Ocorreu um erro desconhecido.';
 
       toast.error(errorMessage);

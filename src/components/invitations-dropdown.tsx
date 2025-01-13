@@ -7,11 +7,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { GetInvitations } from '@/api/get-invitations'
 import { Skeleton } from './ui/skeleton'
+import { ConfirmRevokeDialog } from './invites/confirm-revoke'
+import { AcceptInvite } from "@/api/accept-invite";
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 export function InvitationsDropdown() {
+  const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
 
   const {
     data: invites,
@@ -21,6 +26,29 @@ export function InvitationsDropdown() {
     queryFn: () => GetInvitations(),
     staleTime: 15,
   })
+
+  const { mutateAsync: acceptInvite, isSuccess } = useMutation({
+    mutationFn: AcceptInvite
+  })
+
+  async function handleAcceptInvite(inviteId: string) {
+    try {
+      setLoadingStates((prev) => ({ ...prev, [inviteId]: true }))
+      await acceptInvite({ inviteId })
+      toast.success('Convite aceito com sucesso!')
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.status === 401
+          ? error.response.data.message
+          : error.response?.status === 500
+            ? 'Ocorreu um erro no servidor enquanto aceitava o convite.'
+            : error.response.data.message || 'Ocorreu um erro desconhecido.';
+
+      toast.error(errorMessage);
+    } finally {
+      setLoadingStates((prev) => ({ ...prev, [inviteId]: false }))
+    }
+  }
 
   return (
     <DropdownMenu>
@@ -74,15 +102,25 @@ export function InvitationsDropdown() {
 
                 <DropdownMenuSeparator className='bg-zinc-600' />
                 <div className='w-full flex gap-4 items-center justify-end'>
-                  <button
-                    className='py-1 px-2 rounded-sm bg-red-500'
+                  <ConfirmRevokeDialog
+                    inviteId={invite.id}
                   >
-                    <X className='size-4 text-white' />
-                  </button>
+                    <button
+                      className='py-1 px-2 rounded-sm bg-red-500'
+                    >
+                      <X className='size-4 text-white' />
+                    </button>
+                  </ConfirmRevokeDialog>
+
                   <button
                     className='py-1 px-2 rounded-sm bg-green-500'
+                    onClick={async () => await handleAcceptInvite(invite.id)}
                   >
-                    <Check className='size-4 text-white' />
+                    {loadingStates[invite.id] ? (
+                      <Loader2 className='animate-spin size-4' />
+                    ) : (
+                      <Check className='size-4 text-white' />
+                    )}
                   </button>
                 </div>
               </div>
