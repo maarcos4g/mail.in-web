@@ -24,7 +24,7 @@ import { z } from "zod"
 import { toast } from "sonner"
 import { CreateEmailList } from "@/api/create-email-list"
 import { useMutation } from "@tanstack/react-query"
-import { getCurrentTeamId } from "@/lib/get-current-team-id"
+import { getCurrentTeam } from "@/lib/get-current-team"
 
 const addEmailListSchema = z.object({
   name: z.string({ message: 'Insira o nome da lista' }),
@@ -35,7 +35,7 @@ type AddEmailListSchema = z.infer<typeof addEmailListSchema>
 
 export function AddEmailListSheet() {
 
-  const { teamId } = getCurrentTeamId()
+  const { teamId } = getCurrentTeam() || {}
   const { getAllSenders } = useSender()
   const [senders, setSenders] = useState<string[]>([])
 

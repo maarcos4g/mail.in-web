@@ -1,6 +1,6 @@
 import { GetTeamActivity } from "@/api/get-team-activity"
 import { generateActivityLabel } from "@/lib/generate-team-activity-label"
-import { getCurrentTeamId } from "@/lib/get-current-team-id"
+import { getCurrentTeam } from "@/lib/get-current-team"
 import { useQuery } from "@tanstack/react-query"
 import dayjs from "dayjs"
 
@@ -8,7 +8,7 @@ import { Activity } from "lucide-react"
 import { SkeletonActivity } from "./skeletons/skeleton-activity"
 
 export function TeamActivityTab() {
-  const { teamId } = getCurrentTeamId()
+  const { teamId } = getCurrentTeam() || {}
 
   const {
     data: activities,
@@ -18,6 +18,7 @@ export function TeamActivityTab() {
     queryFn: () => GetTeamActivity({
       teamId: teamId!,
     }),
+    enabled: !!teamId
   })
 
   if (isLoading) {
@@ -40,7 +41,7 @@ export function TeamActivityTab() {
               <span className="text-sm text-zinc-500 font-normal">
                 <span className="text-zinc-100">{activity.authorName} </span>
                 {generateActivityLabel(activity)}
-                {activity.subtype != 'EMAILLIST' && (<span className="text-zinc-100"> Eventos</span>)}
+                {/* {activity.subtype != 'EMAILLIST' && (<span className="text-zinc-100"> Eventos</span>)} */}
               </span>
               <p className="text-xs font-normal text-zinc-600 ml-2">{dayjs(activity.createdAt).fromNow()}</p>
             </div>

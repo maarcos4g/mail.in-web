@@ -129,7 +129,7 @@ export function TeamSwitcher() {
                       className='rounded-full'
                       onCheckedChange={(checked) => {
                         if (checked) {
-                          sessionStorage.setItem('@currentTeamId', team.id)
+                          sessionStorage.setItem('@currentTeam', JSON.stringify(team))
                           navigate(`/team/${encodeURIComponent(team.slug)}`)
                         }
                       }}

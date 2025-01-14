@@ -1,7 +1,7 @@
 import { GetEmailLists } from "@/api/get-email-lists"
 import { useQuery } from "@tanstack/react-query"
 
-import { getCurrentTeamId } from "@/lib/get-current-team-id"
+import { getCurrentTeam } from "@/lib/get-current-team"
 
 import { EmailListSkeleton } from "./skeletons/skeleton-email-lists"
 import { EmailListOptions } from "./email-list-options"
@@ -15,7 +15,7 @@ import { z } from "zod"
 import { Link, useSearchParams } from "react-router-dom"
 
 export function EmailListsTab() {
-  const { teamId } = getCurrentTeamId()
+  const { teamId } = getCurrentTeam() || {}
   const [searchParams, setSearchParams] = useSearchParams()
 
   const pageIndex = z.coerce

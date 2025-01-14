@@ -16,7 +16,7 @@ export function Home() {
 
   if (user) {
     if (user.teams.length > 0) {
-      sessionStorage.setItem('@currentTeamId', user.teams[0].id)
+      sessionStorage.setItem('@currentTeam', JSON.stringify(user.teams[0]))
       navigate(`/team/${encodeURIComponent(user.teams[0].slug)}`)
     }
   }

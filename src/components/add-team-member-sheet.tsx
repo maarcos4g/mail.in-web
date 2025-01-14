@@ -15,7 +15,7 @@ import { PendingInvites } from "./invites/pending-invites"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { getCurrentTeamId } from "@/lib/get-current-team-id"
+import { getCurrentTeam } from "@/lib/get-current-team"
 import { CreateInvite } from "@/api/create-invite"
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "sonner"
@@ -27,7 +27,7 @@ const inviteMemberSchema = z.object({
 type InviteMemberSchema = z.infer<typeof inviteMemberSchema>
 
 export function AddTeamMemberSheet() {
-  const { teamId } = getCurrentTeamId()
+  const { teamId } = getCurrentTeam() || {}
 
   const {
     register,
