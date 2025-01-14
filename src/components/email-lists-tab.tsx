@@ -12,11 +12,12 @@ import emptyState from '@/assets/empty-state.svg'
 
 import dayjs from 'dayjs'
 import { z } from "zod"
-import { Link, useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 
 export function EmailListsTab() {
   const { teamId } = getCurrentTeam() || {}
   const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
 
   const pageIndex = z.coerce
     .number()
@@ -55,23 +56,27 @@ export function EmailListsTab() {
   const total = Math.ceil(data!.total / 6)
 
   return (
-    <div className="flex flex-col gap-4 justify-between">
+    <div className="flex flex-col gap-4 justify-between min-h-[550px]">
       {data?.emailLists && data.emailLists.length > 0 ? (
         <>
           <div className="grid grid-cols-2 gap-6">
             {data.emailLists.map((emailList) => (
-              <Link
-              to={`/team/${encodeURIComponent(emailList.team.slug)}/emails/${emailList.id}`}
-              onClick={() => sessionStorage.setItem('@currentEmailList', emailList.name)}
-              key={emailList.id} 
-              className="bg-zinc-900 border-2 border-zinc-600 rounded-2xl cursor-pointer"
+              <button
+                onClick={() => {
+                  sessionStorage.setItem('@currentEmailList', emailList.name)
+                  navigate(`/team/${encodeURIComponent(emailList.team.slug)}/emails/${emailList.id}`)
+                }}
+                key={emailList.id}
+                className="bg-zinc-900 border-2 border-zinc-600 rounded-2xl cursor-pointer"
               >
                 <div className="p-5 border-b-2 border-zinc-500">
                   <div className="flex items-start justify-between">
                     <span className="text-zinc-200 font-medium text-lg">{emailList.name}</span>
-                    <EmailListOptions />
+                    <EmailListOptions ownerId={emailList.ownerId} emailListId={emailList.id} />
                   </div>
-                  <span className="text-[10px] text-zinc-600 font-semibold">{emailList.senders.length} remetentes adicionados</span>
+                  <div className="w-full flex mt-2">
+                    <span className="text-left text-[10px] text-zinc-600 font-semibold">{emailList.senders.length} remetentes adicionados</span>
+                  </div>
                 </div>
 
                 <div className="w-full bg-zinc-950 px-5 py-4 flex rounded-b-2xl gap-2 items-center">
@@ -95,11 +100,11 @@ export function EmailListsTab() {
                     <span className="underline">{dayjs(emailList.createdAt).fromNow()}</span>
                   </span>
                 </div>
-              </Link>
+              </button>
             ))}
           </div>
 
-          <div className="flex gap-2 min-w-full items-center justify-end">
+          <div className="flex gap-2 min-w-full items-center justify-end mb-2">
             <button
               className="p-[6px] flex items-center justify-center rounded-md border-2 border-zinc-800 disabled:bg-zinc-900 disabled:cursor-not-allowed"
               onClick={() => handlePaginate(pageIndex - 1)}
