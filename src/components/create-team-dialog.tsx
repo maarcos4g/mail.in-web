@@ -15,7 +15,7 @@ import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CreateTeam } from "@/api/create-team"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 const createTeamSchema = z.object({
@@ -25,6 +25,7 @@ const createTeamSchema = z.object({
 type CreateTeamSchema = z.infer<typeof createTeamSchema>
 
 export function CreateTeamDialog() {
+  const queryClient = useQueryClient()
 
   const {
     register,
@@ -35,7 +36,14 @@ export function CreateTeamDialog() {
   })
 
   const { mutateAsync: createTeam } = useMutation({
-    mutationFn: CreateTeam
+    mutationFn: CreateTeam,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['getProfile'],
+        exact: true,
+        refetchType: 'active'
+      })
+    }
   })
 
   async function handleCreateTeam({ name }: CreateTeamSchema) {

@@ -12,7 +12,7 @@ import {
 import { Skeleton } from './ui/skeleton'
 import { ConfirmRevokeDialog } from './invites/confirm-revoke'
 
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { GetInvitations } from '@/api/get-invitations'
 import { AcceptInvite } from "@/api/accept-invite";
 import { toast } from 'sonner'
@@ -20,6 +20,7 @@ import emptyState from '@/assets/empty-state.svg'
 
 export function InvitationsDropdown() {
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
+  const queryClient = useQueryClient()
 
   const {
     data: invites,
@@ -31,7 +32,14 @@ export function InvitationsDropdown() {
   })
 
   const { mutateAsync: acceptInvite, isSuccess } = useMutation({
-    mutationFn: AcceptInvite
+    mutationFn: AcceptInvite,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['getInvitations'],
+        exact: true,
+        refetchType: 'active'
+      })
+    }
   })
 
   async function handleAcceptInvite(inviteId: string) {

@@ -23,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { toast } from "sonner"
 import { CreateEmailList } from "@/api/create-email-list"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { getCurrentTeam } from "@/lib/get-current-team"
 
 const addEmailListSchema = z.object({
@@ -38,6 +38,7 @@ export function AddEmailListSheet() {
   const { teamId } = getCurrentTeam() || {}
   const { getAllSenders } = useSender()
   const [senders, setSenders] = useState<string[]>([])
+  const { invalidateQueries } = useQueryClient()
 
   const {
     register,
@@ -52,7 +53,14 @@ export function AddEmailListSheet() {
   })
 
   const { mutateAsync: createEmailList } = useMutation({
-    mutationFn: CreateEmailList
+    mutationFn: CreateEmailList,
+    onSuccess: () => {
+      invalidateQueries({
+        queryKey: ['getEmailLists', teamId, 0],
+        exact: true,
+        refetchType: 'active'
+      })
+    }
   })
 
   useEffect(() => {

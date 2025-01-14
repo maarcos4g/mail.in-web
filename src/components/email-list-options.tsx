@@ -70,14 +70,14 @@ export function EmailListOptions({ ownerId, emailListId }: EmailListOptionsProps
       >
         <DropdownMenuGroup
         >
-          <Link
+          {/* <Link
             to={'/'}
             className='w-full py-4 flex items-center justify-between text-sm font-semibold text-zinc-200 border-b-2 border-zinc-600'
             onClick={(event) => event.stopPropagation()}
           >
             Favoritos
             <Star className='size-4' />
-          </Link>
+          </Link> */}
 
           {isOwner && (
             <ConfirmDeleteDialog

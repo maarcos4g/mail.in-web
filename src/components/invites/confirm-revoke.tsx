@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/alert-dialog"
 
 import { AlertDialogProps } from "@radix-ui/react-alert-dialog"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { CircleX, Loader2 } from "lucide-react"
 import { toast } from "sonner"
 
@@ -17,9 +17,17 @@ interface ConfirmRevokeProps extends AlertDialogProps {
 }
 
 export function ConfirmRevokeDialog({ children, inviteId, ...props }: ConfirmRevokeProps) {
+  const queryClient = useQueryClient()
 
   const { mutateAsync: revokeInvite, isPending: revokeLoading } = useMutation({
     mutationFn: RevokeInvite,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['getTeamInvites'],
+        exact: true,
+        refetchType: 'active'
+      })
+    },
   })
 
   async function handleRevokeInvite(inviteId: string) {

@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { getCurrentTeam } from "@/lib/get-current-team"
 import { CreateInvite } from "@/api/create-invite"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 const inviteMemberSchema = z.object({
@@ -28,6 +28,7 @@ type InviteMemberSchema = z.infer<typeof inviteMemberSchema>
 
 export function AddTeamMemberSheet() {
   const { teamId } = getCurrentTeam() || {}
+  const queryClient = useQueryClient()
 
   const {
     register,
@@ -39,7 +40,14 @@ export function AddTeamMemberSheet() {
   })
 
   const { mutateAsync: createInvite } = useMutation({
-    mutationFn: CreateInvite
+    mutationFn: CreateInvite,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['getTeamInvites'],
+        exact: true,
+        refetchType: 'active'
+      })
+    }
   })
 
   async function handleCreateInvite({ guestEmail }: InviteMemberSchema) {
