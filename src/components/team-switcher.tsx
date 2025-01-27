@@ -18,7 +18,7 @@ import { Skeleton } from './ui/skeleton'
 
 export function TeamSwitcher() {
   const { slug } = useParams()
-  let teamSlug =
+  const teamSlug =
     slug &&
     decodeURIComponent(slug)
 

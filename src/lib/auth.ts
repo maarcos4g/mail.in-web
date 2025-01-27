@@ -18,7 +18,7 @@ export function getAuth() {
 
 export function signToken(token: string) {
   cookies.set('@token', token, {
-    expires: 60 * 60 * 24 * 7, //7 days
+    expires: 7, //7 days
     path: '/'
   })
 }

@@ -19,7 +19,7 @@ interface EmailListOptionsProps {
 }
 
 export function EmailListOptions({ ownerId, emailListId }: EmailListOptionsProps) {
-  const { ownerId: teamOwnerId, teamId } = getCurrentTeam() || {}
+  const { ownerId: teamOwnerId, teamId, slug } = getCurrentTeam() || {}
   const { user } = getAuth()
   const queryClient = useQueryClient()
 
@@ -97,7 +97,7 @@ export function EmailListOptions({ ownerId, emailListId }: EmailListOptionsProps
           )}
 
           <Link
-            to={'/'}
+            to={`/team/${encodeURIComponent(slug!)}/settings/${emailListId}`}
             className='w-full py-4 flex gap-2 items-center justify-between text-sm font-semibold text-zinc-200'
             onClick={(event) => event.stopPropagation()}
           >

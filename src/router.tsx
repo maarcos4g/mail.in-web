@@ -10,6 +10,7 @@ import { Home } from "@/pages/app";
 import { HomeTeam } from "./pages/app/home";
 import { EmailHome } from "./pages/app/emails";
 import { AcceptInvite } from "./pages/app/accept-invite";
+import { EmailListSettings } from "./pages/app/email-list-settings";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
         path: '/team/:slug/emails/:emailListId',
         element: <EmailHome />
       },
+      {
+        path: '/team/:slug/settings/:emailListId',
+        element: <EmailListSettings />
+      }
     ],
   },
   {
