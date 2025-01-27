@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { GetEmailList } from "@/api/get-email-list";
 import { getIsEmailListOwner } from "@/lib/get-is-email-list-owner";
 import { getAuth } from "@/lib/auth";
+import { DeleteEmailListBox } from "@/components/email-list/delete-email-list";
 
 export function EmailListSettings() {
   const { emailListId } = useParams()
@@ -63,32 +64,27 @@ export function EmailListSettings() {
           </p>
         </div>
 
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            className="px-10 py-2 bg-zinc-100 text-zinc-900 font-medium rounded-lg"
-          >
-            Transferir
-          </button>
-        </div>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  className="px-10 py-2 bg-zinc-100 text-zinc-900 font-medium rounded-lg disabled:bg-zinc-900 disabled:text-zinc-500 disabled:border disabled:border-zinc-800"
+                  disabled
+                >
+                  Transferir
+                </button>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="text-[10px]">Essa funcionalidade ainda não está disponível completamente.</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
-      <div className="space-y-4 border border-red-400 rounded-xl p-6">
-        <div className="space-y-2 border-b border-zinc-800 pb-2">
-          <h1 className="text-lg font-bold">Deletar lista</h1>
-          <p className="text-sm text-zinc-500">
-            A lista de e-mail será excluída permanentemente, incluindo seus remetentes. Esta ação é irreversível e não pode ser desfeita
-          </p>
-        </div>
-
-        <div className="flex justify-end">
-          <button
-            className="px-10 py-2 bg-red-500 text-zinc-100 font-medium rounded-lg"
-          >
-            Excluir
-          </button>
-        </div>
-      </div>
+      {emailList && <DeleteEmailListBox emailListId={emailList?.id} isOwner={isOwner} />}
     </div>
   )
 }

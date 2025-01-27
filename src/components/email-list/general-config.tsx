@@ -24,11 +24,13 @@ const updateEmailListSchema = z.object({
 type UpdateEmailListSchema = z.infer<typeof updateEmailListSchema>
 
 export function GeneralConfigBox({ emailList, isOwner }: GeneralConfigBoxProps) {
-  const [senders, setSenders] = useState<string[]>([])
+  const [sender, setSender] = useState('')
 
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { isSubmitting }
   } = useForm<UpdateEmailListSchema>({
     resolver: zodResolver(updateEmailListSchema),
@@ -38,12 +40,30 @@ export function GeneralConfigBox({ emailList, isOwner }: GeneralConfigBoxProps) 
     }
   })
 
+  const senders = watch("senders", []);
+
   const { mutateAsync: updateEmailList } = useMutation({
     mutationFn: UpdateEmailList,
   })
 
   function handleRemoveSender(senderToRemove: string) {
-    setSenders((prev) => prev.filter(sender => sender !== senderToRemove))
+    const updatedSenders = senders.filter(sender => sender !== senderToRemove)
+    setValue("senders", updatedSenders)
+  }
+
+  function addSender() {
+    if (sender.trim() === '') {
+      toast.error('Insira um valor no campo de e-mail')
+      return
+    }
+    const senderExist = senders.includes(sender)
+    if (senderExist) {
+      toast.error('O e-mail já existe na lista.')
+      return
+    }
+    setValue('senders', [sender, ...senders])
+    setSender("")
+    // setSenders((prev) => [sender, ...prev])
   }
 
   async function handleUpdateEmailList({ name, senders }: UpdateEmailListSchema) {
@@ -65,7 +85,8 @@ export function GeneralConfigBox({ emailList, isOwner }: GeneralConfigBoxProps) 
 
   useEffect(() => {
     if (emailList.senders) {
-      setSenders(emailList.senders)
+      setValue('senders', emailList.senders)
+      // setSenders(emailList.senders)
     }
   }, [emailList.senders])
 
@@ -97,9 +118,10 @@ export function GeneralConfigBox({ emailList, isOwner }: GeneralConfigBoxProps) 
               autoComplete="email"
               autoCapitalize="none"
               className="w-80"
-              // {...register("email")}
+              value={sender}
+              onChange={(event) => setSender(event.target.value)}
             />
-            <button type="submit">
+            <button type="button" onClick={addSender}>
               <CirclePlus />
             </button>
           </div>
@@ -128,7 +150,7 @@ export function GeneralConfigBox({ emailList, isOwner }: GeneralConfigBoxProps) 
         <div className="flex justify-end pt-2">
           <button
             type="submit"
-            className="px-10 py-2 bg-zinc-100 text-zinc-900 font-medium rounded-lg"
+            className="px-10 py-2 bg-zinc-100 text-zinc-900 font-medium rounded-lg disabled:bg-zinc-900 disabled:text-zinc-500 disabled:border disabled:border-zinc-800"
             disabled={isSubmitting || !isOwner}
           >
             Salvar
