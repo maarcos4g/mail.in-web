@@ -157,14 +157,13 @@ export function AddEmailListSheet() {
                 </div>
               ) : (
                 <AddSenders>
-                  <Button
-                    label="Adicionar"
-                    variant="default"
+                  <button
                     type="button"
-                    className="flex px-28 py-3 gap-2.5 min-w-full items-center justify-center"
+                    className="bg-lime-800 text-zinc-100 flex w-full px-28 py-3 gap-2.5 items-center justify-center font-medium text-base rounded-lg disabled:bg-zinc-900 disabled:text-zinc-500 disabled:border disabled:border-zinc-700 hover:bg-lime-900"
                   >
                     <Plus className="size-4" />
-                  </Button>
+                    Adicionar
+                  </button>
                 </AddSenders>
               )}
             </div>

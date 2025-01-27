@@ -26,19 +26,37 @@ export function Home() {
     <div
       className="flex flex-col gap-6 min-w-full min-h-full items-center justify-center"
     >
-      <img
-        src={emptyState}
-        alt=""
-        className="w-36 h-36"
-      />
+      {user?.teams.length === 0 ? (
+        <>
+          <img
+            src={emptyState}
+            alt=""
+            className="w-36 h-36"
+          />
 
-      <h1
-      className="text-center text-zinc-600"
-      >
-        Você não faz parte de nenhum time, <br />
-        solicite um convite ou crie seu próprio time <br />
-        para começar.
-      </h1>
+          <h1
+            className="text-center text-zinc-600"
+          >
+            Você não faz parte de nenhum time, <br />
+            solicite um convite ou crie seu próprio time <br />
+            para começar.
+          </h1>
+        </>
+      ) : (
+        <>
+          <img
+            src={emptyState}
+            alt=""
+            className="w-36 h-36"
+          />
+
+          <h1
+            className="text-center text-zinc-600"
+          >
+            Selecione o time que deseja visualizar as informações
+          </h1>
+        </>
+      )}
     </div>
   )
 }
