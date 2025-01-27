@@ -30,7 +30,6 @@ export function SignUp() {
   const {
     data: result,
     isFetching: isFetchingPlans,
-    isLoading: isLoadingPlans
   } = useQuery({
     queryKey: ['getAllPlans'],
     queryFn: () => GetPlans()

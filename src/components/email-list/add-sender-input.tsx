@@ -19,7 +19,7 @@ export function AddSenderInput({ setSenders: addEmailInList }: AddSenderInputPro
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
+    // formState: { isSubmitting },
   } = useForm<AddSenderSchema>({
     resolver: zodResolver(addSenderSchema),
   });

@@ -1,4 +1,4 @@
-import { MoreHorizontal, Settings, Star, Trash2 } from "lucide-react";
+import { MoreHorizontal, Settings, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,

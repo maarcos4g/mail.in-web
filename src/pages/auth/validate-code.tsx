@@ -64,7 +64,7 @@ export function ValidateCode() {
         <Controller
           name="code"
           control={control}
-          render={({ field }) => (
+          render={({ }) => (
             <PinCode
               length={6}
               onChange={(value) => setValue('code', value, { shouldValidate: true })}

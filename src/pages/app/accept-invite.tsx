@@ -45,7 +45,6 @@ export function AcceptInvite() {
 
   const {
     data: result,
-    isLoading: isLoadingPlans
   } = useQuery({
     queryKey: ['getAllPlans'],
     queryFn: () => GetPlans()

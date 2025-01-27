@@ -11,7 +11,7 @@ import {
 } from './ui/dropdown-menu'
 import { Skeleton } from './ui/skeleton'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { LogOut, UserRoundCog, UsersRound } from 'lucide-react'
+import { LogOut, UserRoundCog } from 'lucide-react'
 
 import cookies from 'js-cookie'
 

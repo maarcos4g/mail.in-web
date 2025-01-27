@@ -31,7 +31,7 @@ export function InvitationsDropdown() {
     staleTime: 15,
   })
 
-  const { mutateAsync: acceptInvite, isSuccess } = useMutation({
+  const { mutateAsync: acceptInvite } = useMutation({
     mutationFn: AcceptInvite,
     onSuccess: () => {
       queryClient.invalidateQueries({

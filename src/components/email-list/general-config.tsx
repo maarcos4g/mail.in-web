@@ -10,7 +10,6 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { UpdateEmailList } from "@/api/update-email-list"
 import { toast } from "sonner"
-import { AddSenderInput } from "./add-sender-input"
 
 interface GeneralConfigBoxProps {
   emailList: GetEmailListResponse['emailList']

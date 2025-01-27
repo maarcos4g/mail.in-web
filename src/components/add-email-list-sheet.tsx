@@ -13,7 +13,7 @@ import {
 import { Input } from "./ui/input"
 import { Button } from "./button"
 
-import { AtSign, Check, CirclePlus, Loader2, Plus, UserRoundPlus } from "lucide-react"
+import { AtSign, Check, CirclePlus, Plus, UserRoundPlus } from "lucide-react"
 
 import { AddSenders } from "./email-list/add-senders-dialog"
 import { useSender } from "./email-list/actions"

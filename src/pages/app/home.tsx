@@ -2,10 +2,9 @@ import { AddNewAction } from "@/components/add-new-action-drop"
 import { EmailListsTab } from "@/components/email-lists-tab"
 import { TeamActivityTab } from "@/components/team-activity-tab"
 import { Search } from "lucide-react"
-import { useParams } from "react-router-dom"
 
 export function HomeTeam() {
-  const { slug } = useParams()
+  // const { slug } = useParams()
 
   return (
     <div className="min-h-full w-full mt-8 flex flex-col gap-8">

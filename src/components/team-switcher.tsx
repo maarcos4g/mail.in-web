@@ -1,10 +1,9 @@
-import { ChevronsUpDown, CircleCheckBig, PlusCircle, UsersRound } from 'lucide-react'
+import { ChevronsUpDown, CircleCheckBig, UsersRound } from 'lucide-react'
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -13,7 +12,7 @@ import {
 import { GetProfile } from '@/api/get-profile'
 import { useQuery } from '@tanstack/react-query'
 import { Checkbox } from './ui/checkbox'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Skeleton } from './ui/skeleton'
 
 export function TeamSwitcher() {

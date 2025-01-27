@@ -1,4 +1,4 @@
-import { AtSign, ChevronDown, ChevronUp, MailPlus, UserRoundPlus } from "lucide-react";
+import { ChevronDown, ChevronUp, MailPlus } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
