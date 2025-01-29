@@ -1,9 +1,41 @@
+import { GetEmails } from "@/api/get-emails";
 import { AddNewAction } from "@/components/add-new-action-drop";
-import { Search } from "lucide-react";
+import { ConfirmDeleteDialog } from "@/components/confirm-delete-dialog";
+import { IconButton } from "@/components/email/icon-button";
+import { Status } from "@/components/email/status-widget";
+import { TableHeaders } from "@/components/email/table-headers";
+import { SkeletonTable } from "@/components/skeletons/skeleton-emails-table";
+import { Table } from "@/components/table";
+import { TableCell } from "@/components/table/table-cell";
+import { TableRow } from "@/components/table/table-row";
+import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  Search,
+  SendHorizonal,
+  SquarePen,
+  Trash2
+} from "lucide-react";
 import { useParams } from "react-router-dom";
 
 export function EmailHome() {
   const { emailListId } = useParams()
+
+  const {
+    data: emails,
+    isLoading
+  } = useQuery({
+    queryKey: ['getEmails', emailListId],
+    queryFn: () => GetEmails({ emailListId: emailListId! })
+  })
+
+  if (isLoading) {
+    return <SkeletonTable />
+  }
 
   return (
     <div className="min-h-full w-full mt-8 flex flex-col gap-8">
@@ -24,11 +56,103 @@ export function EmailHome() {
         <AddNewAction />
       </div>
 
-      <div className="flex justify-between">
-        <div>Emails page</div>
+      <Table>
+        <TableHeaders />
 
-        <div>{emailListId}</div>
-      </div>
+        <tbody>
+          {emails && emails.map((email) => {
+            return (
+              <TableRow key={email.id}>
+                <TableCell>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold text-sm text-zinc-300">
+                      {email.subject}
+                    </span>
+                    <span className="text-xs text-zinc-600">{email.emailList.senders.length} contatos neste e-mail</span>
+                  </div>
+                </TableCell>
+
+                <TableCell>
+                  <Status status={email.status} />
+                </TableCell>
+                <TableCell>{dayjs(email.createdAt).fromNow()}</TableCell>
+                <TableCell>{email.sentAt ? dayjs(email.sentAt).fromNow() : ''}</TableCell>
+                <TableCell>
+                  <div className="flex gap-2 justify-end">
+                    {!email.sentAt && (
+                      <IconButton
+                        transparent
+                        className="bg-black/70 border border-white/10 rounded-md p-1.5"
+                      >
+                        <SendHorizonal className="size-4 text-zinc-300" />
+                      </IconButton>
+                    )}
+
+                    <IconButton
+                      transparent
+                      className="bg-black/70 border border-white/10 rounded-md p-1.5"
+                    >
+                      <SquarePen className="size-4 text-zinc-300" />
+                    </IconButton>
+
+                    <ConfirmDeleteDialog
+                      confirmAction={async () => console.log('Deletou')}
+                      isLoading={true}
+                      title="Deseja mesmo excluir esse e-mail?"
+                      subtitle="Não é possível reverter esta ação"
+                    >
+                      <IconButton
+                        transparent
+                        className="bg-black/70 border border-white/10 rounded-md p-1.5"
+                      >
+                        <Trash2 className="size-4 text-rose-500" />
+                      </IconButton>
+                    </ConfirmDeleteDialog>
+                  </div>
+                </TableCell>
+              </TableRow>
+            )
+          })}
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <TableCell className="text-zinc-500" colSpan={3}>
+              Exibindo 10 de 10 itens
+            </TableCell>
+            <TableCell className="text-right" colSpan={3}>
+              <div className="inline-flex items-center gap-8">
+                <span className="text-zinc-500">
+                  Página {1} de {10}
+                </span>
+
+                <div className="flex gap-1.5">
+                  <IconButton
+                    transparent
+                  >
+                    <ChevronsLeft className="size-4" />
+                  </IconButton>
+                  <IconButton
+                    transparent
+                  >
+                    <ChevronLeft className="size-4" />
+                  </IconButton>
+                  <IconButton
+                    transparent
+                  >
+                    <ChevronRight className="size-4" />
+                  </IconButton>
+                  <IconButton
+                    transparent
+                  >
+                    <ChevronsRight className="size-4" />
+                  </IconButton>
+                </div>
+              </div>
+            </TableCell>
+          </tr>
+        </tfoot>
+      </Table>
     </div>
   )
 }
